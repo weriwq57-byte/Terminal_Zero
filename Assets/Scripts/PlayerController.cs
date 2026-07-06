@@ -14,14 +14,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {
-        // 1. Считываем движение (WASD)
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
+{
+    // Считываем клавиатуру
+    moveInput.x = Input.GetAxisRaw("Horizontal");
+    moveInput.y = Input.GetAxisRaw("Vertical");
 
-        // 2. Считываем позицию мыши на экране
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }
+    // Получаем позицию мыши в мировых координатах (ПРОВЕРЬ ЭТО!)
+    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+}
 
     void FixedUpdate()
     {
