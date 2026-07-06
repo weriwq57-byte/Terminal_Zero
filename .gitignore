@@ -1,0 +1,8 @@
+/[lL]ibrary/
+/[lL]ogs/
+/[lL]ocal[cC]ache/
+/[oO]bj/
+/[bB]uild/
+/[bB]uilds/
+/*.sln
+/*.csproj
