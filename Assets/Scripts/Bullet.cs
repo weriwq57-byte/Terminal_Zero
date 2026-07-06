@@ -2,10 +2,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Работаем через обычное жесткое столкновение
+    public float damage = 5f; // Урон от одной пули
+    private bool hasHit = false; 
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Уничтожаем пулю без шансов на отскок
+        if (hasHit) return;
+
+        HealthSystem health = collision.gameObject.GetComponent<HealthSystem>();
+
+        if (health != null)
+        {
+            hasHit = true; 
+            health.TakeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
 }

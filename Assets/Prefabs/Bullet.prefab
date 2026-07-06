@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdcbd180cc1240f2bfcc63642ff5e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  damage: 5
 --- !u!1 &8301722208052321441
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdcbd180cc1240f2bfcc63642ff5e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  damage: 5
 --- !u!58 &9207937761163641161
 CircleCollider2D:
   m_ObjectHideFlags: 0
