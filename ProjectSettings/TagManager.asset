@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemy
+  - Wall
+  - Bullet
+  - SpawnPoint
+  - Pickup
+  - EnemyProjectile
+  - UI
+  - Door
   layers:
   - Default
   - TransparentFX

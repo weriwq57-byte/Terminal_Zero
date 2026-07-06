@@ -1,8 +1,17 @@
-/[lL]ibrary/
-/[lL]ogs/
-/[lL]ocal[cC]ache/
-/[oO]bj/
-/[bB]uild/
-/[bB]uilds/
-/*.sln
+# Unity
+/[Ll]ibrary/
+/[Ll]ocal[Ll]ow/
+/[Ll]ocal[Cc]ache/
+/[Ll]ogs/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Pp]rojectSettings/[Pp]rojectSettings.asset.bak
 /*.csproj
+/*.sln
+/*.userprefs
+/[Uu]ser[Ss]ettings/
+.idea/
+*.swp
+*.swo
+.DS_Store
