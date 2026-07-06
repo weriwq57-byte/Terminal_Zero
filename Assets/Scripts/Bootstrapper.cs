@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public static class Bootstrapper
 {
@@ -63,7 +62,6 @@ public static class Bootstrapper
         SpriteRenderer sr = wall.AddComponent<SpriteRenderer>();
         sr.sprite = CreateSolidSprite(2, 2, color);
         sr.color = color;
-        wall.transform.localScale = Vector3.one;
     }
 
     static void SetupPlayer()
@@ -129,143 +127,8 @@ public static class Bootstrapper
 
     static void SetupUI()
     {
-        GameObject canvasGO = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-        Canvas canvas = canvasGO.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvasGO.tag = "UI";
-
-        CanvasScaler scaler = canvasGO.GetComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-
-        UIManager ui = canvasGO.AddComponent<UIManager>();
-        Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-        // Health bar
-        GameObject hbGO = new GameObject("HealthBar", typeof(Image));
-        hbGO.transform.SetParent(canvasGO.transform);
-        RectTransform hbRT = hbGO.GetComponent<RectTransform>();
-        hbRT.anchorMin = new Vector2(0.02f, 0.88f);
-        hbRT.anchorMax = new Vector2(0.22f, 0.93f);
-        hbRT.offsetMin = hbRT.offsetMax = Vector2.zero;
-        Image hbBG = hbGO.GetComponent<Image>();
-        hbBG.color = new Color(0.1f, 0.1f, 0.1f);
-
-        GameObject hbFill = new GameObject("Fill", typeof(Image));
-        hbFill.transform.SetParent(hbGO.transform);
-        Image fillImg = hbFill.GetComponent<Image>();
-        fillImg.color = Color.red;
-        RectTransform fillRT = hbFill.GetComponent<RectTransform>();
-        fillRT.anchorMin = fillRT.anchorMax = new Vector2(0, 0.5f);
-        fillRT.sizeDelta = new Vector2(0, 0);
-
-        Slider slider = hbGO.AddComponent<Slider>();
-        slider.minValue = 0;
-        slider.maxValue = 1;
-        slider.value = 1;
-        slider.interactable = false;
-        slider.fillRect = fillRT;
-        slider.targetGraphic = hbBG;
-        ui.healthSlider = slider;
-
-        // Ammo
-        Text ammoTxt = MakeText(canvasGO, "AmmoText", font, "12 / 60", 22, Color.white,
-            new Vector2(0.02f, 0.83f), new Vector2(0.15f, 0.87f));
-        ammoTxt.alignment = TextAnchor.MiddleLeft;
-        ui.ammoText = ammoTxt;
-
-        // Wave
-        Text waveTxt = MakeText(canvasGO, "WaveText", font, "WAVE 1/3", 28, Color.white,
-            new Vector2(0.5f, 0.93f), new Vector2(0.5f, 0.98f));
-        waveTxt.alignment = TextAnchor.MiddleCenter;
-        ui.waveText = waveTxt;
-
-        // Score
-        Text scoreTxt = MakeText(canvasGO, "ScoreText", font, "SCORE: 0", 22, Color.white,
-            new Vector2(0.8f, 0.93f), new Vector2(0.98f, 0.98f));
-        scoreTxt.alignment = TextAnchor.MiddleRight;
-        ui.scoreText = scoreTxt;
-
-        // Message (center screen)
-        Text msgTxt = MakeText(canvasGO, "MessageText", font, "", 42, new Color(1f, 0.3f, 0.1f),
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f));
-        msgTxt.alignment = TextAnchor.MiddleCenter;
-        msgTxt.gameObject.SetActive(false);
-        ui.messageText = msgTxt;
-
-        // Game Over / Win overlay panel
-        GameObject overlay = new GameObject("Overlay", typeof(Image));
-        overlay.transform.SetParent(canvasGO.transform);
-        RectTransform oRT = overlay.GetComponent<RectTransform>();
-        oRT.anchorMin = Vector2.zero;
-        oRT.anchorMax = Vector2.one;
-        oRT.offsetMin = oRT.offsetMax = Vector2.zero;
-        Image overlayImg = overlay.GetComponent<Image>();
-        overlayImg.color = new Color(0, 0, 0, 0);
-        overlayImg.raycastTarget = false;
-
-        // Restart / Quit buttons (always there but hidden behind overlay)
-        Text finalScore = MakeText(canvasGO, "FinalScoreText", font, "", 36, Color.white,
-            new Vector2(0.5f, 0.45f), new Vector2(0.5f, 0.5f));
-        finalScore.alignment = TextAnchor.MiddleCenter;
-        finalScore.gameObject.SetActive(false);
-
-        MakeButton(canvasGO, "RestartButton", "RESTART", new Vector2(0.5f, 0.35f), font, () => {
-            if (GameManager.Instance) GameManager.Instance.RestartGame();
-        }).gameObject.SetActive(false);
-
-        MakeButton(canvasGO, "QuitButton", "QUIT", new Vector2(0.5f, 0.25f), font, () => Application.Quit())
-            .gameObject.SetActive(false);
-
-        ui.finalScoreText = finalScore;
-    }
-
-    static Text MakeText(GameObject parent, string name, Font font, string text, int size, Color color,
-        Vector2 anchorMin, Vector2 anchorMax)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent.transform);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.offsetMin = rt.offsetMax = Vector2.zero;
-        Text txt = go.AddComponent<Text>();
-        txt.font = font;
-        txt.fontSize = size;
-        txt.color = color;
-        txt.text = text;
-        return txt;
-    }
-
-    static Button MakeButton(GameObject parent, string name, string label, Vector2 anchorPos, Font font,
-        UnityEngine.Events.UnityAction action)
-    {
-        GameObject btnGO = new GameObject(name, typeof(RectTransform), typeof(Image));
-        btnGO.transform.SetParent(parent.transform);
-        RectTransform rt = btnGO.GetComponent<RectTransform>();
-        rt.anchorMin = rt.anchorMax = anchorPos;
-        rt.sizeDelta = new Vector2(220, 50);
-
-        Image btnImg = btnGO.GetComponent<Image>();
-        btnImg.color = new Color(0.3f, 0.3f, 0.3f);
-
-        Button btn = btnGO.AddComponent<Button>();
-        btn.targetGraphic = btnImg;
-        btn.onClick.AddListener(action);
-
-        GameObject txtGO = new GameObject("Text", typeof(RectTransform));
-        txtGO.transform.SetParent(btnGO.transform);
-        Text txt = txtGO.AddComponent<Text>();
-        txt.font = font;
-        txt.fontSize = 26;
-        txt.text = label;
-        txt.color = Color.white;
-        txt.alignment = TextAnchor.MiddleCenter;
-
-        RectTransform trt = txtGO.GetComponent<RectTransform>();
-        trt.anchorMin = trt.anchorMax = new Vector2(0.5f, 0.5f);
-        trt.sizeDelta = new Vector2(220, 50);
-        return btn;
+        GameObject ui = new GameObject("UIManager");
+        ui.AddComponent<UIManager>();
     }
 
     static void SetupManagers()
