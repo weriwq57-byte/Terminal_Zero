@@ -216,11 +216,11 @@ public static class Bootstrapper
             gm.ammoPackPrefab = ap;
 
             gm.runnerPrefab = MakeEnemyPrefab("RunnerPrefab", EnemyController.EnemyType.Runner,
-                new Color(0.9f, 0.2f, 0.1f), 0.5f, 30f, 4f, 10f, 1.5f, 1f, 100f);
+                new Color(0.9f, 0.2f, 0.1f), 0.5f, 30f, 2.5f, 10f, 1.5f, 1f, 100f);
             gm.brutePrefab = MakeEnemyPrefab("BrutePrefab", EnemyController.EnemyType.Brute,
-                new Color(0.6f, 0.1f, 0.1f), 0.8f, 80f, 1.8f, 20f, 1.5f, 2f, 200f);
+                new Color(0.6f, 0.1f, 0.1f), 0.8f, 80f, 1.2f, 20f, 1.5f, 2f, 200f);
             gm.spitterPrefab = MakeEnemyPrefab("SpitterPrefab", EnemyController.EnemyType.Spitter,
-                new Color(0.3f, 0.8f, 0.1f), 0.5f, 40f, 2.5f, 12f, 5f, 1.5f, 150f);
+                new Color(0.3f, 0.8f, 0.1f), 0.5f, 40f, 1.8f, 12f, 5f, 1.5f, 150f);
 
             EnemyController spitter = gm.spitterPrefab.GetComponent<EnemyController>();
             spitter.spitPrefab = spit;

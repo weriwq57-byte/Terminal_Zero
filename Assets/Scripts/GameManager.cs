@@ -186,8 +186,35 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        StopAllCoroutines();
+
+        foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy"))
+            Destroy(e);
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Pickup"))
+            Destroy(p);
+        foreach (GameObject b in GameObject.FindGameObjectsWithTag("Bullet"))
+            Destroy(b);
+        foreach (GameObject ep in GameObject.FindGameObjectsWithTag("EnemyProjectile"))
+            Destroy(ep);
+
+        currentWave = 0;
+        aliveEnemies = 0;
+        score = 0;
+        gameActive = true;
+        playerDied = false;
+
+        if (player != null)
+        {
+            player.position = Vector3.zero;
+            player.gameObject.SetActive(true);
+            playerController.FullReset();
+        }
+
+        if (UIManager.Instance)
+            UIManager.Instance.ResetHUD();
+
+        LockDoors(false);
+        StartCoroutine(BeginGame());
     }
 
     void Update()

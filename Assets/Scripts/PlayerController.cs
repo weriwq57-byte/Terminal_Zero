@@ -192,6 +192,26 @@ public class PlayerController : MonoBehaviour
             UIManager.Instance.UpdateAmmo(currentAmmo[currentWeapon], reserveAmmo[currentWeapon]);
     }
 
+    public void FullReset()
+    {
+        health = maxHealth;
+        dead = false;
+        isReloading = false;
+        reloadTimer = 0;
+        fireTimer = 0;
+        currentWeapon = 0;
+        for (int i = 0; i < weaponNames.Length; i++)
+        {
+            currentAmmo[i] = magSizes[i];
+            reserveAmmo[i] = maxAmmo[i];
+        }
+        if (UIManager.Instance)
+        {
+            UIManager.Instance.UpdateHealth(1f);
+            UIManager.Instance.UpdateAmmo(currentAmmo[0], reserveAmmo[0]);
+        }
+    }
+
     void Die()
     {
         dead = true;

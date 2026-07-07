@@ -198,4 +198,16 @@ public class UIManager : MonoBehaviour
         finalScoreText = $"FINAL SCORE: {Mathf.RoundToInt(score)}";
         screen = ScreenState.Win;
     }
+
+    public void ResetHUD()
+    {
+        screen = ScreenState.HUD;
+        healthRatio = 1f;
+        ammoText = "12 / 60";
+        waveText = "WAVE 1/3";
+        scoreText = "SCORE: 0";
+        finalScoreText = "";
+        messageText = "";
+        messageTimer = 0;
+    }
 }
