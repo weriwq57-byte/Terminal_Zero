@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject spitterPrefab;
 
     [Header("Difficulty Scaling")]
-    public float enemiesPerWaveScale = 1.5f;
+    public float enemiesPerWaveScale = 1.3f;
     public float bruteChance = 0.2f;
     public float spitterChance = 0.1f;
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         aliveEnemies--;
         if (aliveEnemies < 0) aliveEnemies = 0;
 
-        if (Random.value < 0.15f && player != null)
+        if (Random.value < 0.25f && player != null)
             DropLoot((Vector2)player.position + Random.insideUnitCircle * 2f);
     }
 

@@ -5,7 +5,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     private float healthRatio = 1f;
-    private string ammoText = "12 / 60";
+    private string ammoText = "[PISTOL] 12 / 60";
     private string waveText = "WAVE 1/3";
     private string scoreText = "SCORE: 0";
     private string messageText = "";
@@ -163,7 +163,13 @@ public class UIManager : MonoBehaviour
 
     // Public API
     public void UpdateHealth(float ratio) { healthRatio = ratio; }
-    public void UpdateAmmo(int current, int reserve) { ammoText = $"{current} / {reserve}"; }
+    public void UpdateAmmo(int current, int reserve, string weaponName = "")
+    {
+        if (string.IsNullOrEmpty(weaponName))
+            ammoText = $"{current} / {reserve}";
+        else
+            ammoText = $"[{weaponName}] {current} / {reserve}";
+    }
     public void UpdateWave(int current, int total) { waveText = $"WAVE {current}/{total}"; }
     public void UpdateScore(int score) { scoreText = $"SCORE: {score}"; }
 
@@ -203,7 +209,7 @@ public class UIManager : MonoBehaviour
     {
         screen = ScreenState.HUD;
         healthRatio = 1f;
-        ammoText = "12 / 60";
+        ammoText = "[PISTOL] 12 / 60";
         waveText = "WAVE 1/3";
         scoreText = "SCORE: 0";
         finalScoreText = "";

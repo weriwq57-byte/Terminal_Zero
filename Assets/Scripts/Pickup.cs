@@ -4,7 +4,7 @@ public class Pickup : MonoBehaviour
 {
     public enum PickupType { Health, Ammo }
     public PickupType type = PickupType.Health;
-    public float healAmount = 30f;
+    public float healAmount = 40f;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,7 +19,7 @@ public class Pickup : MonoBehaviour
         }
         else
         {
-            pc.AddAmmo(15, 30);
+            pc.AddAmmo(25, 50);
         }
 
         if (AudioManager.Instance)
