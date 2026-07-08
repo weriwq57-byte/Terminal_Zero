@@ -6,6 +6,9 @@ public class UIManager : MonoBehaviour
 
     private float healthRatio = 1f;
     private string ammoText = "[PISTOL] 12 / 60";
+    private Texture2D weaponIconTex;
+    private Texture2D pistolIconTex;
+    private Texture2D smgIconTex;
     private string waveText = "WAVE 1/3";
     private string scoreText = "SCORE: 0";
     private string messageText = "";
@@ -28,6 +31,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        pistolIconTex = Resources.Load<Texture2D>("Sprites/weapon_gun");
+        smgIconTex = Resources.Load<Texture2D>("Sprites/weapon_machine");
+        weaponIconTex = pistolIconTex;
     }
 
     void InitStyles()
@@ -84,7 +90,9 @@ public class UIManager : MonoBehaviour
         DrawBar(hbX, hbY, hbW, hbH, healthRatio, Color.red, new Color(0.1f, 0.1f, 0.1f));
 
         // Ammo
-        GUI.Label(new Rect(sw * 0.02f, sh * 0.83f, sw * 0.15f, sh * 0.04f), ammoText, labelStyle);
+        if (weaponIconTex != null)
+            GUI.DrawTexture(new Rect(sw * 0.02f, sh * 0.75f, sw * 0.05f, sw * 0.05f), weaponIconTex);
+        GUI.Label(new Rect(sw * 0.02f, sh * 0.83f, sw * 0.25f, sh * 0.04f), ammoText, labelStyle);
 
         // Wave
         GUI.Label(new Rect(sw * 0.45f, sh * 0.93f, sw * 0.1f, sh * 0.05f), waveText, bigStyle);
@@ -114,7 +122,11 @@ public class UIManager : MonoBehaviour
         if (GUI.Button(new Rect(Screen.width * 0.4f, Screen.height * 0.5f, Screen.width * 0.2f, 50), "RESUME", buttonStyle))
             TogglePause();
 
-        if (GUI.Button(new Rect(Screen.width * 0.4f, Screen.height * 0.6f, Screen.width * 0.2f, 50), "QUIT", buttonStyle))
+        string fsLabel = Screen.fullScreen ? "WINDOWED" : "FULLSCREEN";
+        if (GUI.Button(new Rect(Screen.width * 0.4f, Screen.height * 0.6f, Screen.width * 0.2f, 50), fsLabel, buttonStyle))
+            Screen.fullScreen = !Screen.fullScreen;
+
+        if (GUI.Button(new Rect(Screen.width * 0.4f, Screen.height * 0.7f, Screen.width * 0.2f, 50), "QUIT", buttonStyle))
             Application.Quit();
     }
 
@@ -163,6 +175,10 @@ public class UIManager : MonoBehaviour
 
     // Public API
     public void UpdateHealth(float ratio) { healthRatio = ratio; }
+    public void UpdateWeaponIcon(int weaponIndex)
+    {
+        weaponIconTex = weaponIndex == 0 ? pistolIconTex : smgIconTex;
+    }
     public void UpdateAmmo(int current, int reserve, string weaponName = "")
     {
         if (string.IsNullOrEmpty(weaponName))

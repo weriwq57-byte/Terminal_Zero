@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
         }
 
         UpdateWeaponSprite();
+        if (UIManager.Instance)
+            UIManager.Instance.UpdateWeaponIcon(currentWeapon);
     }
 
     void Update()
@@ -180,7 +182,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) { currentWeapon = 1; UpdateWeaponSprite(); }
 
         if (UIManager.Instance)
+        {
+            UIManager.Instance.UpdateWeaponIcon(currentWeapon);
             UIManager.Instance.UpdateAmmo(currentAmmo[currentWeapon], reserveAmmo[currentWeapon], weaponNames[currentWeapon]);
+        }
     }
 
     public void TakeDamage(float damage)
@@ -222,6 +227,8 @@ public class PlayerController : MonoBehaviour
         fireTimer = 0;
         currentWeapon = 0;
         UpdateWeaponSprite();
+        if (UIManager.Instance)
+            UIManager.Instance.UpdateWeaponIcon(currentWeapon);
         for (int i = 0; i < weaponNames.Length; i++)
         {
             currentAmmo[i] = magSizes[i];

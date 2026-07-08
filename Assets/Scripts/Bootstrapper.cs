@@ -8,6 +8,7 @@ public static class Bootstrapper
         if (GameObject.FindGameObjectWithTag("Player") != null)
             return;
 
+        Screen.fullScreen = true;
         SetupCamera();
         SetupFloor();
         SetupWalls();

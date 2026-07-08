@@ -224,5 +224,7 @@ public class GameManager : MonoBehaviour
             if (UIManager.Instance)
                 UIManager.Instance.TogglePause();
         }
+        if (Input.GetKeyDown(KeyCode.F11) || (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.Return)))
+            Screen.fullScreen = !Screen.fullScreen;
     }
 }
